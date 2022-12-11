@@ -2,6 +2,7 @@ package com.prueba.prueba.service;
 
 import com.prueba.prueba.exceptions.ResourceNotFoundException;
 import com.prueba.prueba.models.Flower;
+import com.prueba.prueba.models.FlowerResponse;
 import com.prueba.prueba.repository.FlowerRepository;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static com.prueba.prueba.models.FlowerListStatic.FLOWERLIST;
 
 @Slf4j
 @Service
@@ -46,7 +49,6 @@ public class FlowerService {
     public List<Flower> getFlowersByPrice(Integer price){
             if(price <= 20){
                 final List<Flower> flowersResponse = new ArrayList<>();
-                log.info("Se va vacío");
                 return flowersResponse;
             }else{
                 List<Flower> flowers = flowerRepository.findAll();
@@ -72,15 +74,11 @@ public class FlowerService {
 
 
 
-    public List<Flower> getOrderFlowers(){
-        List<Flower> flowers = flowerRepository.findAllByOrderByNameDesc();
-        final List<Flower> flowersResponse = new ArrayList<>();
-        flowers.stream().forEach(flower -> {
-            //flower.setId(flower.getId());
-            flower.setName(flower.getName() + "-kometsales");
-            flower.setPrice(flower.getPrice());
-            log.info(String.valueOf(flower));
-            flowersResponse.add(flower);
+    public List<FlowerResponse> getOrderFlowers(){
+
+        final List<FlowerResponse> flowersResponse = new ArrayList<>();
+        FLOWERLIST.stream().forEach(flower -> {
+            flowersResponse.add(flower.flowerResponse());
         });
 
         return  flowersResponse;

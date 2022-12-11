@@ -3,6 +3,7 @@ package com.prueba.prueba.controllers;
 
 import com.prueba.prueba.exceptions.ResourceNotFoundException;
 import com.prueba.prueba.models.Flower;
+import com.prueba.prueba.models.FlowerResponse;
 import com.prueba.prueba.service.FlowerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,8 +65,8 @@ public class FlowerController {
 
     //Get Flowers and Arrange them By Name
     @RequestMapping(value = "flowers/order", method = RequestMethod.GET)
-    public ResponseEntity<List<Flower>> getOrderFlowers(){
-        List<Flower> flowers = flowerService.getOrderFlowers();
+    public ResponseEntity<List<FlowerResponse>> getOrderFlowers(){
+        List<FlowerResponse> flowers = flowerService.getOrderFlowers();
         log.info(String.valueOf(flowers));
         if(flowers != null){
             return ResponseEntity.ok(flowers);
@@ -85,7 +86,7 @@ public class FlowerController {
     //Register various flowers
     @RequestMapping(value = "flowers/list",  method = RequestMethod.POST)
     public ResponseEntity<List<Flower>> registerFlowers(@RequestBody List<Flower> flowers) throws Exception {
-        List<Flower> flowersResponse = new ArrayList<>();
+        FLOWERLIST.clear();
         flowers.stream().forEach(flower -> {
             flower = flowerService.register(flower);
             FLOWERLIST.add(flower);

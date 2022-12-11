@@ -29,10 +29,12 @@ public class Flower implements Serializable {
 
     private Integer price;
 
-
-
     public Flower(String name, Integer price) {
         this.name = name;
         this.price = price;
+    }
+
+    public FlowerResponse flowerResponse(){
+        return new FlowerResponse(this.name + "-kometsales", this.price);
     }
 }
